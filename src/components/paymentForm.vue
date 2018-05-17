@@ -36,122 +36,126 @@
 
 <script>
 export default {
-  name: 'paymentForm',
+  name: "paymentForm",
   data: function() {
     return {
       errors: [],
       masterpass: false,
       applePay: false
-    }
+    };
   },
   watch: {
     showPaymentForm: function() {
       if (!this.showPaymentForm) {
         return 1;
       }
-      let locationId = '75MBQ5SS3SKJK';
-      let applicationId = 'sq0idp-gbQhcOCpmb2X4W1588Ky7A';
-      let that = this;
-      this.paymentForm = new SqPaymentForm({
-        applicationId: applicationId,
-        locationId: locationId,
-        inputClass: 'sq-input',
-        // Initialize the payment form elements
-
-        // Customize the CSS for SqPaymentForm iframe elements
-        inputStyles: [{
-          fontSize: '.9em'
-        }],
-
-        // Initialize Apple Pay placeholder ID
-        applePay: {
-          elementId: that.id + '-sq-apple-pay'
-        },
-
-        // Initialize Masterpass placeholder ID
-        masterpass: {
-          elementId: that.id + '-sq-masterpass'
-        },
-
-        // Initialize the credit card placeholders
-        cardNumber: {
-          elementId: that.id + '-sq-card-number',
-          placeholder: 'Card number'
-        },
-        cvv: {
-          elementId: that.id + '-sq-cvv',
-          placeholder: 'CVV'
-        },
-        expirationDate: {
-          elementId: that.id + '-sq-expiration-date',
-          placeholder: 'MM / YY'
-        },
-        postalCode: {
-          elementId: that.id + '-sq-postal-code',
-          placeholder: 'Zip Code'
-        },
-
-        // SqPaymentForm callback functions
-        callbacks: {
-
-          /*
-           * callback function: methodsSupported
-           * Triggered when: the page is loaded.
-           */
-          methodsSupported: function(methods) {
-            // Only show the button if Apple Pay for Web is enabled
-            // Otherwise, display the wallet not enabled message.
-            that.applePay = methods.applePay;
-            that.masterpass = methods.masterpass;
-          },
-
-          /*
-           * Digital Wallet related functions
-           */
-          createPaymentRequest: function() {
-            var paymentRequestJson;
-            /* ADD CODE TO SET/CREATE paymentRequestJson */
-            return paymentRequestJson;
-          },
-          validateShippingContact: function(contact) {
-            var validationErrorObj;
-            /* ADD CODE TO SET validationErrorObj IF ERRORS ARE FOUND */
-            return validationErrorObj;
-          },
-
-          /*
-           * callback function: cardNonceResponseReceived
-           * Triggered when: SqPaymentForm completes a card nonce request
-           */
-          cardNonceResponseReceived: function(errors, nonce, cardData) {
-            if (errors) {
-              errors.forEach(function(error) {
-                that.errors.push(error.message);
-              });
-              return;
-            }
-            // Assign the nonce value to the hidden form field
-            document.getElementById('card-nonce').value = nonce;
-
-            // POST the nonce form to the payment processing page
-            document.getElementById('nonce-form').submit();
-          },
-          /*
-           * callback function: paymentFormLoaded
-           * Triggered when: SqPaymentForm is fully loaded
-           */
-          paymentFormLoaded: function() {
-            console.log('paymentFormLoaded')
-            /* HANDLE AS DESIRED */
-          }
-        }
-      })
       this.paymentForm.build();
     }
   },
   props: {
     showPaymentForm: Boolean,
     id: Number
+  },
+  mounted: function() {
+    let locationId = "75MBQ5SS3SKJK";
+    let applicationId = "sq0idp-gbQhcOCpmb2X4W1588Ky7A";
+    let that = this;
+    this.paymentForm = new SqPaymentForm({
+      autoBuild: false,
+      applicationId: applicationId,
+      locationId: locationId,
+      inputClass: "sq-input",
+      // Initialize the payment form elements
+
+      // Customize the CSS for SqPaymentForm iframe elements
+      inputStyles: [
+        {
+          fontSize: ".9em"
+        }
+      ],
+
+      // Initialize Apple Pay placeholder ID
+      applePay: {
+        elementId: that.id + "-sq-apple-pay"
+      },
+
+      // Initialize Masterpass placeholder ID
+      masterpass: {
+        elementId: that.id + "-sq-masterpass"
+      },
+
+      // Initialize the credit card placeholders
+      cardNumber: {
+        elementId: that.id + "-sq-card-number",
+        placeholder: "Card number"
+      },
+      cvv: {
+        elementId: that.id + "-sq-cvv",
+        placeholder: "CVV"
+      },
+      expirationDate: {
+        elementId: that.id + "-sq-expiration-date",
+        placeholder: "MM / YY"
+      },
+      postalCode: {
+        elementId: that.id + "-sq-postal-code",
+        placeholder: "Zip Code"
+      },
+
+      // SqPaymentForm callback functions
+      callbacks: {
+        /*
+           * callback function: methodsSupported
+           * Triggered when: the page is loaded.
+           */
+        methodsSupported: function(methods) {
+          // Only show the button if Apple Pay for Web is enabled
+          // Otherwise, display the wallet not enabled message.
+          that.applePay = methods.applePay;
+          that.masterpass = methods.masterpass;
+        },
+
+        /*
+           * Digital Wallet related functions
+           */
+        createPaymentRequest: function() {
+          var paymentRequestJson;
+          /* ADD CODE TO SET/CREATE paymentRequestJson */
+          return paymentRequestJson;
+        },
+        validateShippingContact: function(contact) {
+          var validationErrorObj;
+          /* ADD CODE TO SET validationErrorObj IF ERRORS ARE FOUND */
+          return validationErrorObj;
+        },
+
+        /*
+           * callback function: cardNonceResponseReceived
+           * Triggered when: SqPaymentForm completes a card nonce request
+           */
+        cardNonceResponseReceived: function(errors, nonce, cardData) {
+          if (errors) {
+            errors.forEach(function(error) {
+              that.errors.push(error.message);
+            });
+            return;
+          }
+          // Assign the nonce value to the hidden form field
+          document.getElementById("card-nonce").value = nonce;
+
+          // POST the nonce form to the payment processing page
+          document.getElementById("nonce-form").submit();
+        },
+        /*
+           * callback function: paymentFormLoaded
+           * Triggered when: SqPaymentForm is fully loaded
+           */
+        paymentFormLoaded: function() {
+          console.log("paymentFormLoaded");
+          /* HANDLE AS DESIRED */
+        }
+      }
+    });
   },
   methods: {
     requestCardNonce: function(event) {
@@ -160,9 +164,9 @@ export default {
 
       // Request a nonce from the SqPaymentForm object
       this.paymentForm.requestCardNonce();
-    },
-  },
-}
+    }
+  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -183,9 +187,8 @@ export default {
 
 .sq-input ::placeholder {
   color: #aab7c4;
-  opacity: .5;
+  opacity: 0.5;
 }
-
 
 /* Define how SqPaymentForm iframes should look when they have focus */
 
@@ -208,7 +211,6 @@ export default {
 
   margin-top: -10px;
   font-weight: 400;
-
 }
 
 /* Customize the "Pay with Credit Card" button */
