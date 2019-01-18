@@ -1,6 +1,6 @@
 # vue-square
 
-A example of using the [Square Payment Form](https://docs.connect.squareup.com/payments/sqpaymentform/sqpaymentform-overview) with Vue.js. Please read the full description in **this blog post**. 
+A example of using the [Square Payment Form](https://docs.connect.squareup.com/payments/sqpaymentform/sqpaymentform-overview) with Vue.js. Please read the full description in [**this blog post**](https://medium.com/square-corner-blog/taking-payments-online-with-square-and-vue-js-39a15d2fb474). 
 
 To try it out, first clone the repo and then run `npm run dev` to start up the development server. 
 
